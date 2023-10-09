@@ -1,0 +1,223 @@
+10/09/23 17:08:04       PROGRESS Report
+Database: sports2020 (PROGRESS)
+
+
+
+
+============================================================================
+=============================== Table: Customer ============================
+
+ Table Flags: "f"=frozen, "s"=a SQL table
+
+
+Table                            Table Field Index Table
+Name                             Flags Count Count Label
+-------------------------------- ----- ----- ----- ------------------------
+Customer                                  18     5 ?
+
+    Dump Name: customer
+  Description: The customer table contains customer  information including
+               balance and address.
+ Storage Area: Data Area
+
+       Trigger Event Trigger Procedure    Overridable? Check CRC?
+       ------------- -------------------- ------------ ----------
+       CREATE        sports2020trgs/crcus no           no
+       DELETE        sports2020trgs/delcu no           no
+       WRITE         sports2020trgs/wrcus no           no
+
+
+=============================== FIELD SUMMARY ==============================
+=============================== Table: Customer ============================
+
+Flags: <c>ase sensitive, <i>ndex component, <m>andatory, <v>iew component
+
+Order Field Name                       Data Type   Flags
+----- -------------------------------- ----------- -----
+   10 CustNum                          inte        i
+   15 Country                          char        i
+   30 Name                             char        i
+   40 Address                          char
+   50 Address2                         char
+   60 City                             char
+   70 State                            char
+   80 PostalCode                       char        i
+  110 Contact                          char
+  115 Phone                            char
+  125 SalesRep                         char        i
+  130 CreditLimit                      deci-2
+  140 Balance                          deci-2
+  150 Terms                            char
+  170 Discount                         inte
+  180 Comments                         char        i
+  190 Fax                              char
+  200 EmailAddress                     char
+
+Field Name                       Format
+-------------------------------- -----------------------------
+CustNum                          >>>>9
+Country                          x(20)
+Name                             x(30)
+Address                          x(35)
+Address2                         x(35)
+City                             x(25)
+State                            x(20)
+PostalCode                       x(10)
+Contact                          x(30)
+Phone                            x(20)
+SalesRep                         x(4)
+CreditLimit                      ->,>>>,>>9
+Balance                          ->,>>>,>>9.99
+Terms                            x(20)
+Discount                         >>9%
+Comments                         x(80)
+Fax                              x(20)
+EmailAddress                     x(50)
+
+Field Name                       Initial
+-------------------------------- -----------------------------
+CustNum                          0
+Country                          USA
+Name
+Address
+Address2
+City
+State
+PostalCode
+Contact
+Phone
+SalesRep
+CreditLimit                      1500
+Balance                          0
+Terms                            Net30
+Discount                         0
+Comments
+Fax
+EmailAddress
+
+Field Name                     Label                  Column Label
+------------------------------ ---------------------- ----------------------
+CustNum                        Cust Num               ?
+Country                        Country                ?
+Name                           Name                   ?
+Address                        Address                ?
+Address2                       Address2               ?
+City                           City                   ?
+State                          State                  ?
+PostalCode                     Postal Code            ?
+Contact                        Contact                ?
+Phone                          Phone                  ?
+SalesRep                       Sales Rep              ?
+CreditLimit                    Credit Limit           ?
+Balance                        Balance                ?
+Terms                          Terms                  ?
+Discount                       Discount               ?
+Comments                       Comments               ?
+Fax                            Fax                    ?
+EmailAddress                   Email                  ?
+
+
+=============================== INDEX SUMMARY ==============================
+=============================== Table: Customer ============================
+
+Flags: <p>rimary, <u>nique, <w>ord, <a>bbreviated, <i>nactive, + asc, - desc
+
+
+Flags Index Name                       Cnt Field Name
+----- -------------------------------- --- ---------------------------------
+w     Comments                           1 + Comments
+
+      CountryPost                        2 + Country
+                                           + PostalCode
+
+pu    CustNum                            1 + CustNum
+
+      Name                               1 + Name
+
+      SalesRep                           1 + SalesRep
+
+** Index Name: Comments
+ Storage Area: Index Area
+** Index Name: CountryPost
+ Storage Area: Index Area
+** Index Name: CustNum
+ Storage Area: Index Area
+** Index Name: Name
+ Storage Area: Index Area
+** Index Name: SalesRep
+ Storage Area: Index Area
+
+
+=============================== FIELD DETAILS ==============================
+=============================== Table: Customer ============================
+
+** Field Name: CustNum
+         Help: Please enter a customer number.
+      Val-Msg: Customer number must be greater than zero
+      Val-Exp: custnum > 0
+
+** Field Name: Country
+         Help: Please enter a country.
+
+** Field Name: Name
+         Help: Please enter a name.
+
+** Field Name: Address
+         Help: Please enter an address.
+
+** Field Name: Address2
+         Help: Please enter an address.
+
+** Field Name: City
+         Help: Please enter a city.
+
+** Field Name: State
+  Description: Label/Valexp/Valmsg/Help are set based on value of NON-US
+               field!
+         Help: Please enter standard state abbreviation.
+
+** Field Name: PostalCode
+  Description: Format/Label/Help Message based on status of NON-US field.
+         Help: Please enter the appropriate Postal Code.
+
+** Field Name: Contact
+         Help: Please enter a contact.
+
+** Field Name: Phone
+  Description: Format/Label/Help based on status of NON-US field.
+         Help: Please enter a phone number
+
+** Field Name: SalesRep
+         Help: Please Enter a Sales Rep.
+      Val-Msg: The Sales Rep's name you've entered must exist in the
+               SalesRep table.
+      Val-Exp: CAN-FIND(Salesrep OF Customer)
+
+** Field Name: CreditLimit
+  Description: Maximum credit
+         Help: Please enter a Credit Limit.
+      Val-Msg: Credit Limit must be >= 0 and <= 9,999,999
+      Val-Exp: CreditLimit >= 0 AND CreditLimit <= 9999999
+
+** Field Name: Balance
+         Help: Please enter a balance.
+
+** Field Name: Terms
+         Help: Please enter terms
+
+** Field Name: Discount
+         Help: Please enter a percentage from 0 to 100.
+      Val-Msg: Discount must be greater or equal to 0
+      Val-Exp: Discount >= 0
+
+** Field Name: Comments
+         Help: Please enter comments.
+
+** Field Name: Fax
+  Description: Format/Label/Help based on status of NON-US field.
+         Help: Please enter a fax number.
+
+** Field Name: EmailAddress
+         Help: Please enter an full Internet Email Address.
+
+
