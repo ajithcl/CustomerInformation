@@ -1,0 +1,3 @@
+-db D:\Ajith\CustomerInformation\Database\sports2020
+-T D:\Ajith\CustomerInformation\ProgressApplicationServer\CustInfo\temp
+#-T "${catalina.base}/temp"
