@@ -43,7 +43,8 @@ PROCEDURE GetCustomers:
     
     jsonArray = NEW Progress.Json.ObjectModel.JsonArray().
     jsonArray:Read(TEMP-TABLE ttCustomer:HANDLE).
-    CustomersJsonText = jsonArray:GetJsonObject(1):GetJsonText().   
+    CustomersJsonText = jsonArray:GetJsonText().
+    //CustomersJsonText = jsonArray:GetJsonObject(1):GetJsonText().   
     
 /*    MESSAGE STRING(CustomersJsonText) VIEW-AS ALERT-BOX.*/
 END PROCEDURE.
