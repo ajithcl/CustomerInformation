@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer';
 
@@ -12,9 +12,11 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  getCustomers(){
-    let customerResponse = this.http.get<any>(this.customerApiUrl);
-    console.log(customerResponse);
-    //TODO : This method should be returning cutomer[] of observable type.
+  getCustomers():Observable<any>{
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json; charset=UTF-8');
+    console.log('Url: ' + this.customerApiUrl);
+    return this.http.get<any>(this.customerApiUrl,{headers});
+
   }
 }

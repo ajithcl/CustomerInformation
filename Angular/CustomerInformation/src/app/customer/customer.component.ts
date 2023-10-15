@@ -14,10 +14,20 @@ export class CustomerComponent {
   constructor(private customerService: CustomerService){}
 
   ngOnInit():void{
-    let customerResult = this.customerService.getCustomers();
-    //TODO : Needs to get observable type from customer service
-    console.log('From customer.component');
-    console.log(customerResult);
+    this.customerService.getCustomers().subscribe({
+      next:(data)=>{
+        console.log("Success");
+        // response, CustomersJsonText are the keys in the JSON file.
+        let response = data.response;
+        let customersJsonText = response.CustomersJsonText;
+        this.customerList = customersJsonText;
+        console.log(this.customerList);
+      },error:(err)=>{
+        console.error("Error occured:");
+        console.log(err);
+      }
+    });
+
   }
 
 
