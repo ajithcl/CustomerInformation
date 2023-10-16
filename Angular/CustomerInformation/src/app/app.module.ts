@@ -3,17 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CustomerComponent } from './customer/customer.component';
+// import { CustomerComponent } from './customer/customer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomerModule } from './customer/customer.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CustomerComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
