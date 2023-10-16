@@ -1,6 +1,6 @@
 <div>
     <h1>Customers</h1>
-    <table mat-table [dataSource]="customerList" >
+    <table mat-table [dataSource]="customerList">
 
     <ng-container matColumnDef="CustNum">
         <th mat-header-cell *matHeaderCellDef> CustNum </th>
@@ -79,4 +79,5 @@
     <tr mat-row *matRowDef="let row; columns: customerColumns"></tr>
 
     </table> 
+
 </div>
