@@ -2,17 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { Customer } from '../models/customer';
 import { CustomerService } from './customer.service';
 
-
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
+
 export class CustomerComponent {
   customerList:Customer[] = [];
-  customerColumns: string[] = ['CustNum', 'Name', 'Country', 'Address', 'Address2', 'City', 'State','PostalCode','Contact','Phone','SalesRep','CreditLimit','Balance','Terms','Discount','Comments','Fax','EmailAddress'];
+  
+  // Get the Customer property names 
+  customerColumns = this.GetClassPropertyNames(new Customer());
 
-  constructor(private customerService: CustomerService){}
+  constructor(private customerService: CustomerService){ }
+  
+  // Generic method for accessing the property names of a class object.
+  GetClassPropertyNames(target: any) {
+    let result:string[]=[];
+    Reflect.ownKeys(target)
+    .map(key =>{
+      result.push(key.toString())
+    })
+    return result;
+  }
 
   ngOnInit():void{
     this.customerService.getCustomers().subscribe({
@@ -28,8 +40,5 @@ export class CustomerComponent {
         console.log(err);
       }
     });
-
   }
-
-
 }
