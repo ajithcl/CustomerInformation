@@ -7,11 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomerModule } from './customer/customer.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { CustomerViewComponent } from './customer-view/customer-view.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    CustomerViewComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     HttpClientModule,
     BrowserAnimationsModule,
     CustomerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
