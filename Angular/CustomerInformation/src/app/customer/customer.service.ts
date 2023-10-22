@@ -15,8 +15,7 @@ export class CustomerService {
   getCustomers():Observable<any>{
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json; charset=UTF-8');
-    console.log('Url: ' + this.customerApiUrl);
+    //console.log('Url: ' + this.customerApiUrl);
     return this.http.get<any>(this.customerApiUrl,{headers});
-
   }
 }
