@@ -40,6 +40,11 @@ export class CustomerComponent {
     )
   }
 
+  GetCustomerLink(customerid: string):string{
+    // TODO : remove url hard coding.
+    return 'http://localhost:4200/customer/'+ customerid;
+  }
+
   ngOnInit():void{
     this.customerService.getCustomers().subscribe({
       next:(data)=>{
