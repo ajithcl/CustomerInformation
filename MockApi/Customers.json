@@ -36,12 +36,111 @@
       ],
       "enabled": true,
       "responseMode": null
+    },
+    {
+      "uuid": "11737050-b9e9-461c-8c11-9f7c6223eb77",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "CustomerInformation/rest/CustomerInformationService/Customer/3000",
+      "responses": [
+        {
+          "uuid": "e996b336-a8e6-4442-a115-853b14c5a9c3",
+          "body": "{\"response\":{\"CustomerJsonText\":\"{\\\"ttCustomer\\\":[{\\\"CustNum\\\":3000,\\\"Country\\\":\\\"USA\\\",\\\"Name\\\":\\\"Lift Tours\\\",\\\"Address\\\":\\\"276 North Drive\\\",\\\"Address2\\\":\\\"\\\",\\\"City\\\":\\\"Burlington\\\",\\\"State\\\":\\\"MA\\\",\\\"PostalCode\\\":\\\"01730\\\",\\\"Contact\\\":\\\"Gloria Shepley\\\",\\\"Phone\\\":\\\"(617) 450-0086\\\",\\\"SalesRep\\\":\\\"HXM\\\",\\\"CreditLimit\\\":66700.00,\\\"Balance\\\":903.64,\\\"Terms\\\":\\\"Net30\\\",\\\"Discount\\\":35,\\\"Comments\\\":\\\"This customer is on credit hold.\\\",\\\"Fax\\\":\\\"\\\",\\\"EmailAddress\\\":\\\"\\\"}]}\"}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "1485ccf8-51cb-493e-8b2a-a4ec84cc1c88",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "CustomerInformation/rest/CustomerInformationService/Customer/123",
+      "responses": [
+        {
+          "uuid": "2090756d-f18f-43f4-ae5e-056936f84bd5",
+          "body": "{\"response\":{\"CustomerJsonText\":\"{\\\"ttCustomer\\\":[]}\"}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "f7602948-6bb0-4d66-8eee-fd9392982c95",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "CustomerInformation/rest/CustomerInformationService/Customer/ABC",
+      "responses": [
+        {
+          "uuid": "c19046bf-1f21-4e8f-b1f6-986c744a263b",
+          "body": "Unable to convert from java.lang.String to java.lang.Integer - The value was not an INTEGER\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
     }
   ],
   "rootChildren": [
     {
       "type": "route",
       "uuid": "2a73b321-406d-4dac-a052-e03d3248198c"
+    },
+    {
+      "type": "route",
+      "uuid": "11737050-b9e9-461c-8c11-9f7c6223eb77"
+    },
+    {
+      "type": "route",
+      "uuid": "1485ccf8-51cb-493e-8b2a-a4ec84cc1c88"
+    },
+    {
+      "type": "route",
+      "uuid": "f7602948-6bb0-4d66-8eee-fd9392982c95"
     }
   ],
   "proxyMode": false,
