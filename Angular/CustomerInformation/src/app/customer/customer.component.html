@@ -1,5 +1,11 @@
+<br><br><br>
+
+<mat-divider></mat-divider>
 <div>
-    <br><br><br>
+    <button mat-raised-button color="primary" (click)="NewCustomer()">New</button>
+</div>
+<mat-divider></mat-divider>
+<div>  
     <table mat-table [dataSource]="customerList">
 
         <ng-container matColumnDef="CustNum">

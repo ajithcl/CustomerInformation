@@ -15,23 +15,26 @@ export class CustomerViewComponent implements OnInit {
   constructor(
     private _activatedRoute:ActivatedRoute,
     private _customerService:CustomerService
-  ){
-   }
-
+  ){ }
 
   ngOnInit(): void {
     let custNum = this._activatedRoute.snapshot.paramMap.get('custnum') ;
     let parsedCustomerNumber:number = parseInt(custNum || "0");
 
-    this._customerService.getCustomer(parsedCustomerNumber).subscribe({
-      next:(data)=>{
-        let responseFromCustomer = data.response;
-        let customerJsonText = responseFromCustomer.CustomerJsonText;
-        this.customer = JSON.parse(customerJsonText).ttCustomer[0];
-      }, error:(err)=>{
-        console.log('Error occured while accessing individual customer.');
-      }
-    });
+    if (parsedCustomerNumber != 0){
+      this._customerService.getCustomer(parsedCustomerNumber).subscribe({
+        next:(data)=>{
+          let responseFromCustomer = data.response;
+          let customerJsonText = responseFromCustomer.CustomerJsonText;
+          this.customer = JSON.parse(customerJsonText).ttCustomer[0];
+        }, error:(err)=>{
+          console.log('Error occured while accessing individual customer.');
+        }
+      });
+    }
+    else{
+      console.log (' New Customer');
+    }
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Customer } from '../models/customer';
 import { CustomerService } from './customer.service';
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -16,7 +17,8 @@ export class CustomerComponent {
   customerColumns = this.GetClassPropertyNames(new Customer());
 
   constructor(private customerService: CustomerService,
-              private _snackbar: MatSnackBar){ }
+              private _snackbar: MatSnackBar,
+              private _router: Router){ }
   
   // Generic method for accessing the property names of a class object.
   GetClassPropertyNames(target: any) {
@@ -57,5 +59,9 @@ export class CustomerComponent {
         this.OpenSnackbar("Error while accessing Customer list.");
       }
     });
+  }
+
+  NewCustomer(){
+    this._router.navigate(['/customer/0']);
   }
 }
