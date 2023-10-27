@@ -1,3 +1,7 @@
 table {
     width: 100%;
 }
+.button-space {
+    margin: 4px;
+    /* Adds 10 pixels of space around the element */
+}

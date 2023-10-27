@@ -3,6 +3,7 @@ import { Customer } from '../models/customer';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../customer/customer.service';
 
+
 @Component({
   selector: 'app-customer-view',
   templateUrl: './customer-view.component.html',
@@ -10,7 +11,6 @@ import { CustomerService } from '../customer/customer.service';
 })
 export class CustomerViewComponent implements OnInit {
   customer = new Customer();
-
 
   constructor(
     private _activatedRoute:ActivatedRoute,
