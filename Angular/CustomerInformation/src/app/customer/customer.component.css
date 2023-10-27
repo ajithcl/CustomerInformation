@@ -3,5 +3,8 @@ table {
 }
 .button-space {
     margin: 4px;
-    /* Adds 10 pixels of space around the element */
+}
+
+.customer-table-space{
+    margin: 4px;
 }

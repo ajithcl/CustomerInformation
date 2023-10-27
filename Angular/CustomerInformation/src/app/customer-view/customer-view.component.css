@@ -2,3 +2,8 @@
     margin: 5px;
     /* Adds 10 pixels of space around the element */
 }
+
+.customer-field-width{
+    width: 500px;
+    margin-left: 5px;
+}

@@ -1,57 +1,92 @@
 <div>
     <br><br><br><br>
     <h1> Customer Information</h1>
-    <div class="row mt-3">
-        <div class="col">
-            <input class="form-control" [(ngModel)]="customer.Name" placeholder="Customer name">
+    <form>
+        <div class="row">
+            <mat-form-field class="customer-field-width">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Enter the customer name"  value="{{customer.Name}}">
+            </mat-form-field>
         </div>
-    </div>
-    <div class = "row">
-        <input class="form-control" [(ngModel)]="customer.Address" placeholder="Address line 1">
-    </div>
+        <div class="row">
+            <mat-form-field class="customer-field-width">
+                <mat-label>Address Line 1</mat-label>
+                <textarea matInput placeholder="Enter the customer address line 1" value="{{customer.Address}}"></textarea>
+            </mat-form-field>
+            <mat-form-field class="customer-field-width">
+                <mat-label>Address Line 2</mat-label>
+                <textarea matInput placeholder="Enter the customer address line 2" value="{{customer.Address2}}"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>City</mat-label>
+                <input matInput placeholder="Enter the customer's City" value="{{customer.City}}">
+            </mat-form-field>
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>State</mat-label>
+                <input matInput placeholder="Enter the customer's state" value="{{customer.State}}">
+            </mat-form-field>
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Country</mat-label>
+                <input matInput placeholder="Enter the customer's Country" value="{{customer.Country}}">
+            </mat-form-field>
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Postal code</mat-label>
+                <input matInput placeholder="Enter the customer's Postal code" value="{{customer.PostalCode}}">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Phone</mat-label>
+                <input matInput placeholder="Enter the customer's Phone number" value="{{customer.Phone}}">
+            </mat-form-field>
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Fax</mat-label>
+                <input matInput placeholder="Enter the customer's Fax number" value="{{customer.Fax}}">
+            </mat-form-field>
+            <mat-form-field class="customer-field-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput placeholder="Enter the customer's Email address" value="{{customer.EmailAddress}}">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="customer-field-width">
+                <mat-label>Sales Representative</mat-label>
+                <input matInput placeholder="Enter the customer's Sales representative" value="{{customer.SalesRep}}">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Credit Limit</mat-label>
+                <input matInput placeholder="Enter the customer's Credit Limit" value="{{customer.CreditLimit}}">
+            </mat-form-field>
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Balance</mat-label>
+                <input matInput placeholder="Enter the customer's Balance" value="{{customer.Balance}}">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Terms</mat-label>
+                <input matInput placeholder="Enter the customer's Terms" value="{{customer.Terms}}">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field style="width: 250px; margin-left: 5px;">
+                <mat-label>Discount</mat-label>
+                <input matInput placeholder="Enter the customer's Discount" value="{{customer.Discount}}">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field style="width:1000px; margin-left:5px">
+                <mat-label>Comments</mat-label>
+                <textarea matInput placeholder="Enter Comments" value="{{customer.Comments}}"></textarea>
+            </mat-form-field>
+        </div>
+    </form>
+
     <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Address2" placeholder="Address line 2">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.City" placeholder="City">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.State" placeholder="State">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.PostalCode" placeholder="Postal code">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Country" placeholder="Country">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Phone" placeholder="Phone">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.SalesRep" placeholder="Sales representative">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.CreditLimit" placeholder="Credit Limit">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Balance" placeholder="Balance">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Terms" placeholder="Terms">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Discount" placeholder="Discount">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Comments" placeholder="Comments">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.Fax" placeholder="Fax">
-    </div>
-    <div class="row">
-        <input class="form-control" [(ngModel)]="customer.EmailAddress" placeholder="Email Address">
-    </div>
-    <div class="col">
         <button mat-raised-button color="primary" class="button-space">Save</button>
         <button mat-raised-button color="warn" class="button-space">Cancel</button>
     </div>
