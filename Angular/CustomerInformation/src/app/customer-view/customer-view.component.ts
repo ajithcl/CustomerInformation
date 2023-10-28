@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Customer } from '../models/customer';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../customer/customer.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-view',
@@ -11,11 +11,17 @@ import { CustomerService } from '../customer/customer.service';
 })
 export class CustomerViewComponent implements OnInit {
   customer = new Customer();
+  customer_header = '';
+  isNewCustomer:boolean=true;
 
   constructor(
     private _activatedRoute:ActivatedRoute,
-    private _customerService:CustomerService
-  ){ }
+    private _customerService:CustomerService,
+    private _router:Router
+  ){ 
+    this.customer_header = "New Customer";
+    this.isNewCustomer = true;
+  }
 
   ngOnInit(): void {
     let custNum = this._activatedRoute.snapshot.paramMap.get('custnum') ;
@@ -27,13 +33,25 @@ export class CustomerViewComponent implements OnInit {
           let responseFromCustomer = data.response;
           let customerJsonText = responseFromCustomer.CustomerJsonText;
           this.customer = JSON.parse(customerJsonText).ttCustomer[0];
+          this.customer_header = 'Customer number: ' + custNum;
+          this.isNewCustomer = false;
         }, error:(err)=>{
-          console.log('Error occured while accessing individual customer.');
+          this.isNewCustomer=false;
+          alert('Error occured while accessing individual customer.');
         }
       });
     }
     else{
       console.log (' New Customer');
+    }
+  }
+
+  CancelAction():void{
+    if (this.isNewCustomer){
+      this._router.navigate(['/customers']);
+    }
+    else{
+      window.close();
     }
   }
 
