@@ -13,6 +13,7 @@ export class CustomerViewComponent implements OnInit {
   customer = new Customer();
   customer_header = '';
   isNewCustomer:boolean=true;
+  buttonUpdateLabel:string='Add';
 
   constructor(
     private _activatedRoute:ActivatedRoute,
@@ -35,6 +36,7 @@ export class CustomerViewComponent implements OnInit {
           this.customer = JSON.parse(customerJsonText).ttCustomer[0];
           this.customer_header = 'Customer number: ' + custNum;
           this.isNewCustomer = false;
+          this.buttonUpdateLabel = 'Save';
         }, error:(err)=>{
           this.isNewCustomer=false;
           alert('Error occured while accessing individual customer.');
