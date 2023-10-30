@@ -19,12 +19,15 @@ export class CustomerViewComponent implements OnInit {
     private _activatedRoute:ActivatedRoute,
     private _customerService:CustomerService,
     private _router:Router
-  ){ 
+    ){ 
     this.customer_header = "New Customer";
     this.isNewCustomer = true;
   }
 
   ngOnInit(): void {
+
+
+
     let custNum = this._activatedRoute.snapshot.paramMap.get('custnum') ;
     let parsedCustomerNumber:number = parseInt(custNum || "0");
 
@@ -55,6 +58,12 @@ export class CustomerViewComponent implements OnInit {
     else{
       window.close();
     }
+  }
+
+  //TODO
+  AddUpdateCustomer():boolean{
+    console.log(this.customer);
+    return false;
   }
 
 }

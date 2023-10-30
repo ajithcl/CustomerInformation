@@ -5,8 +5,11 @@
     <button mat-raised-button class="button-space" color="primary" (click)="NewCustomer()">New</button>
 </div>
 <mat-divider></mat-divider>
-<div class="customer-table-space">  
-    <table mat-table [dataSource]="customerList">
+<div class="customer-table-space">
+    <ng-template #noCustomers>
+        <p>No customers list available.</p>
+    </ng-template>
+    <table mat-table [dataSource]="customerList" *ngIf="customerList.length; else noCustomers">
 
         <ng-container matColumnDef="CustNum">
             <th mat-header-cell *matHeaderCellDef> CustNum </th>
