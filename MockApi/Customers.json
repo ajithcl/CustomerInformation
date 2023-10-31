@@ -123,6 +123,35 @@
       ],
       "enabled": true,
       "responseMode": null
+    },
+    {
+      "uuid": "308acd85-9d80-4ad2-89e6-b8913aadaf97",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "CustomerInformation/rest/CustomerInformationService/Customer/Add",
+      "responses": [
+        {
+          "uuid": "b00de673-7b97-4b71-b478-3e5881e328ab",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
     }
   ],
   "rootChildren": [
@@ -141,6 +170,10 @@
     {
       "type": "route",
       "uuid": "f7602948-6bb0-4d66-8eee-fd9392982c95"
+    },
+    {
+      "type": "route",
+      "uuid": "308acd85-9d80-4ad2-89e6-b8913aadaf97"
     }
   ],
   "proxyMode": false,

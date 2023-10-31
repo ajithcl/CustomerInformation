@@ -63,6 +63,13 @@ export class CustomerViewComponent implements OnInit {
   //TODO
   AddUpdateCustomer():boolean{
     console.log(this.customer);
+    this._customerService.addCustomer(this.customer).subscribe({
+      next:(responseData)=>{
+        console.log('responseData: ' , responseData);
+      }, error: (responseError)=>{
+        console.log ('ResponseError', responseError)
+      }
+    })
     return false;
   }
 

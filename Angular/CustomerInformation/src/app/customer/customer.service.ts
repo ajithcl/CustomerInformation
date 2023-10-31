@@ -10,6 +10,8 @@ import { Customer } from '../models/customer';
 export class CustomerService {
   private customerApiUrl = environment.customerApiUrl + "/CustomerInformation/rest/CustomerInformationService/Customers";
   private _customerViewApiUrl = environment.customerApiUrl + "/CustomerInformation/rest/CustomerInformationService/Customer/";
+  private _customerAddUrl = environment.customerApiUrl + "/CustomerInformation/rest/CustomerInformationService/Customer/Add";
+  
   constructor(private http: HttpClient) { }
 
   getCustomers():Observable<any>{
@@ -21,5 +23,9 @@ export class CustomerService {
 
   getCustomer(customerNumber:number):Observable<any>{
     return this.http.get<any>(this._customerViewApiUrl + customerNumber);
+  }
+
+  addCustomer(customer:Customer):Observable<any>{
+    return this.http.post<any>(this._customerAddUrl, customer);
   }
 }
