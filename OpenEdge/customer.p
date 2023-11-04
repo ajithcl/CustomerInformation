@@ -86,10 +86,12 @@ PROCEDURE AddNewCustomer:
     DEFINE VARIABLE isProcessingSuccess AS LOGICAL NO-UNDO.
     DEFINE VARIABLE processingMessage AS CHARACTER NO-UNDO.
     DEFINE VARIABLE errorCount  AS INTEGER NO-UNDO.
-    
+    DEFINE VARIABLE customerFieldCount AS INTEGER NO-UNDO.
+    DEFINE VARIABLE customerFieldName AS CHARACTER NO-UNDO.
     DEFINE VARIABLE CustomerFields AS 'System.Array' NO-UNDO.
-    
     DEFINE VARIABLE customerNumber LIKE Customer.CustNum NO-UNDO.
+    
+    DEFINE VARIABLE customerBuffer AS HANDLE NO-UNDO.
     
     //Reference : https://www.progresstalk.com/threads/how-to-convert-a-json-string-into-a-json-object.138642/ 
     
@@ -103,9 +105,6 @@ PROCEDURE AddNewCustomer:
         jsonParser = NEW objectModelParser().
         customerJson = CAST (jsonParser:Parse(postData), JsonObject).
         
-        CustomerFields =  customerJson:GetNames().
-        MESSAGE customerFields:LENGTH .   //ToDO
-        
         isProcessingSuccess = TRUE.
         MESSAGE customerJson:GetCharacter("Name") VIEW-AS ALERT-BOX.
         customerNumber = customerJson:GetInteger("CustNum").
@@ -114,7 +113,39 @@ PROCEDURE AddNewCustomer:
             isProcessingSuccess = FALSE.
             processingMessage = "Existing customer! Unable to add".
         END.
-        ELSE DO:
+        ELSE DO TRANSACTION:
+            // Get the list of customer object property names
+            CustomerFields =  customerJson:GetNames().
+            
+            customerBuffer = BUFFER Customer:HANDLE.
+            customerNumber = NEXT-VALUE (NextCustNum).
+            customerBuffer:BUFFER-CREATE ().
+            customerBuffer:BUFFER-FIELD ('CustNum'):BUFFER-VALUE = customerNumber.
+            DO customerFieldCount = 0 TO customerFields:LENGTH - 1:
+                customerFieldName = customerFields:GetValue(customerFieldCount).
+                IF customerFieldName = 'CustNum' THEN NEXT.
+                MESSAGE customerFieldName customerFieldCount.
+                
+                CASE customerBuffer:BUFFER-FIELD (customerFieldName):DATA-TYPE:
+                    WHEN 'character' THEN DO:
+                        customerBuffer:BUFFER-FIELD (customerFieldName):BUFFER-VALUE = customerJson:GetCharacter(customerFieldName).
+                    END.
+                    //TODO
+                END CASE.
+            END.
+            customerBuffer:BUFFER-RELEASE().
+            
+            ASSIGN 
+                isProcessingSuccess = TRUE
+                processingMessage = SUBSTITUTE ('New customer created with CustNum &1', customerNumber).
+            
+            CATCH recordCreateError AS Progress.Lang.Error :
+                isProcessingSuccess = FALSE.
+                processingMessage = 'Error while creating the record.'.
+                DO errorCount = 1 TO recordCreateError:NumMessages:
+                    processingMessage = processingMessage + ' ' + recordCreateError:GetMessage(errorCount).
+                END. 
+            END CATCH.
         END.
         
         CATCH parseError AS Progress.Lang.Error :
