@@ -25,9 +25,6 @@ export class CustomerViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
-
     let custNum = this._activatedRoute.snapshot.paramMap.get('custnum') ;
     let parsedCustomerNumber:number = parseInt(custNum || "0");
 
@@ -62,15 +59,30 @@ export class CustomerViewComponent implements OnInit {
 
   //TODO
   AddUpdateCustomer():boolean{
-    console.log(this.customer);
     this._customerService.addCustomer(this.customer).subscribe({
       next:(responseData)=>{
-        console.log('responseData: ' , responseData);
+        console.log(' AddUpdateCustomer responseData: ' , responseData);
       }, error: (responseError)=>{
         console.log ('ResponseError', responseError)
       }
     })
     return false;
+  }
+
+  DeleteAction():void{
+    let custNum = this._activatedRoute.snapshot.paramMap.get('custnum');
+    let parsedCustomerNumber: number = parseInt(custNum || "0");
+    event?.preventDefault(); //ToDO: event is depreciated.
+    this._customerService.deleteCustomer(parsedCustomerNumber).subscribe({
+      next:(responseData)=>{
+        console.log('delete success',responseData.deleteStatus);
+        console.log(responseData.message);
+        window.close();
+      }, error:(responseError)=>{
+        alert(responseError); //ToDO : parse this object and show error message.
+        console.log('delete',responseError);
+      }
+    })
   }
 
 }

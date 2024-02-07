@@ -11,7 +11,8 @@ export class CustomerService {
   private customerApiUrl = environment.customerApiUrl + "/CustomerInformation/rest/CustomerInformationService/Customers";
   private _customerViewApiUrl = environment.customerApiUrl + "/CustomerInformation/rest/CustomerInformationService/Customer/";
   private _customerAddUrl = environment.customerApiUrl + "/CustomerInformation/rest/CustomerInformationService/Customer/Add";
-  
+  private __customerDeleteUrl = environment.customerApiUrl + "/CustomerInformation/rest/CustomerInformationService/Customer/Delete/";
+
   constructor(private http: HttpClient) { }
 
   getCustomers():Observable<any>{
@@ -27,5 +28,9 @@ export class CustomerService {
 
   addCustomer(customer:Customer):Observable<any>{
     return this.http.post<any>(this._customerAddUrl, customer);
+  }
+
+  deleteCustomer(customerNumber:number):Observable<any>{
+    return this.http.delete<any>(this.__customerDeleteUrl + customerNumber);
   }
 }

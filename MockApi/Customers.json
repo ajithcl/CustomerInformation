@@ -152,6 +152,35 @@
       ],
       "enabled": true,
       "responseMode": null
+    },
+    {
+      "uuid": "a1ed51d4-7903-46c2-a7bb-5a35c14f388a",
+      "type": "http",
+      "documentation": "",
+      "method": "delete",
+      "endpoint": "CustomerInformation/rest/CustomerInformationService/Customer/Delete/3000",
+      "responses": [
+        {
+          "uuid": "23dddccd-8348-469f-ab5b-c7916d903fed",
+          "body": "{\"deleteStatus\":\"success\",\n  \"message\": \"\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
     }
   ],
   "rootChildren": [
@@ -174,6 +203,10 @@
     {
       "type": "route",
       "uuid": "308acd85-9d80-4ad2-89e6-b8913aadaf97"
+    },
+    {
+      "type": "route",
+      "uuid": "a1ed51d4-7903-46c2-a7bb-5a35c14f388a"
     }
   ],
   "proxyMode": false,
