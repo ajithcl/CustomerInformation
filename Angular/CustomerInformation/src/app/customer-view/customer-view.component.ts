@@ -75,9 +75,17 @@ export class CustomerViewComponent implements OnInit {
     event?.preventDefault(); //ToDO: event is depreciated.
     this._customerService.deleteCustomer(parsedCustomerNumber).subscribe({
       next:(responseData)=>{
-        console.log('delete success',responseData.deleteStatus);
-        console.log(responseData.message);
-        window.close();
+        let processResponse = JSON.parse(responseData.response.processResponse);
+        console.log(processResponse);
+        console.log('delete status', processResponse.status);
+        console.log('response message', processResponse.message);
+        if (processResponse.status){
+          window.close();
+        }
+        else{
+          alert("Unable to delete customer." + processResponse.message);
+        }
+        
       }, error:(responseError)=>{
         alert(responseError); //ToDO : parse this object and show error message.
         console.log('delete',responseError);
