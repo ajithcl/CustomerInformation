@@ -80,27 +80,29 @@ PROCEDURE AddNewCustomer:
     DEFINE INPUT PARAMETER postData AS LONGCHAR NO-UNDO.
     DEFINE OUTPUT PARAMETER processResponse AS LONGCHAR NO-UNDO.
     
-    DEFINE VARIABLE jsonParser AS ObjectModelParser NO-UNDO.
-    DEFINE VARIABLE customerJson AS JsonObject NO-UNDO.
-    DEFINE VARIABLE responseJson AS JsonObject NO-UNDO.
-    DEFINE VARIABLE isProcessingSuccess AS LOGICAL NO-UNDO.
-    DEFINE VARIABLE processingMessage AS CHARACTER NO-UNDO.
-    DEFINE VARIABLE errorCount  AS INTEGER NO-UNDO.
-    DEFINE VARIABLE customerFieldCount AS INTEGER NO-UNDO.
-    DEFINE VARIABLE customerFieldName AS CHARACTER NO-UNDO.
-    DEFINE VARIABLE CustomerFields AS 'System.Array' NO-UNDO.
-    DEFINE VARIABLE customerNumber LIKE Customer.CustNum NO-UNDO.
+    DEFINE VARIABLE jsonParser          AS ObjectModelParser NO-UNDO.
+    DEFINE VARIABLE customerJson        AS JsonObject        NO-UNDO.
+    DEFINE VARIABLE responseJson        AS JsonObject        NO-UNDO.
+    DEFINE VARIABLE isProcessingSuccess AS LOGICAL           NO-UNDO.
+    DEFINE VARIABLE processingMessage   AS CHARACTER         NO-UNDO.
+    DEFINE VARIABLE errorCount          AS INTEGER           NO-UNDO.
+    DEFINE VARIABLE customerFieldCount  AS INTEGER           NO-UNDO.
+    DEFINE VARIABLE customerFieldName   AS CHARACTER         NO-UNDO.
+    DEFINE VARIABLE CustomerFields      AS 'System.Array'    NO-UNDO.
+    DEFINE VARIABLE customerNumber      LIKE Customer.CustNum NO-UNDO.
     
-    DEFINE VARIABLE customerBuffer AS HANDLE NO-UNDO.
+    DEFINE VARIABLE customerBuffer      AS HANDLE            NO-UNDO.
     
     //Reference : https://www.progresstalk.com/threads/how-to-convert-a-json-string-into-a-json-object.138642/ 
     
-    IF postData = "" OR postData = ? THEN DO:
+    IF postData = "" OR postData = ? THEN 
+    DO:
         isProcessingSuccess = FALSE.
         processingMessage = "Invalid input".
         
     END.
-    ELSE DO ON ERROR UNDO, LEAVE:
+    ELSE 
+    DO ON ERROR UNDO, LEAVE:
         postData = CODEPAGE-CONVERT (postData, "UTF-8").
         jsonParser = NEW objectModelParser().
         customerJson = CAST (jsonParser:Parse(postData), JsonObject).
@@ -109,11 +111,13 @@ PROCEDURE AddNewCustomer:
         MESSAGE customerJson:GetCharacter("Name") VIEW-AS ALERT-BOX.
         customerNumber = customerJson:GetInteger("CustNum").
         
-        IF CAN-FIND (FIRST Customer NO-LOCK WHERE Customer.CustNum = customerNumber) THEN DO:
+        IF CAN-FIND (FIRST Customer NO-LOCK WHERE Customer.CustNum = customerNumber) THEN 
+        DO:
             isProcessingSuccess = FALSE.
             processingMessage = "Existing customer! Unable to add".
         END.
-        ELSE DO TRANSACTION:
+        ELSE 
+        DO TRANSACTION:
             // Get the list of customer object property names
             CustomerFields =  customerJson:GetNames().
             
@@ -127,9 +131,10 @@ PROCEDURE AddNewCustomer:
                 MESSAGE customerFieldName customerFieldCount.
                 
                 CASE customerBuffer:BUFFER-FIELD (customerFieldName):DATA-TYPE:
-                    WHEN 'character' THEN DO:
-                        customerBuffer:BUFFER-FIELD (customerFieldName):BUFFER-VALUE = customerJson:GetCharacter(customerFieldName).
-                    END.
+                    WHEN 'character' THEN 
+                        DO:
+                            customerBuffer:BUFFER-FIELD (customerFieldName):BUFFER-VALUE = customerJson:GetCharacter(customerFieldName).
+                        END.
                     //TODO
                 END CASE.
             END.
@@ -137,7 +142,7 @@ PROCEDURE AddNewCustomer:
             
             ASSIGN 
                 isProcessingSuccess = TRUE
-                processingMessage = SUBSTITUTE ('New customer created with CustNum &1', customerNumber).
+                processingMessage   = SUBSTITUTE ('New customer created with CustNum &1', customerNumber).
             
             CATCH recordCreateError AS Progress.Lang.Error :
                 isProcessingSuccess = FALSE.
@@ -161,12 +166,63 @@ PROCEDURE AddNewCustomer:
         responseJson:Add('status', isProcessingSuccess).
         responseJson:Add('message', processingMessage).
         
-       processResponse = responseJson:GetJsonText().
+        processResponse = responseJson:GetJsonText().
         
-        IF VALID-OBJECT (jsonParser) 
+        IF VALID-OBJECT (jsonParser)
             THEN DELETE OBJECT jsonParser.
         IF VALID-OBJECT (customerJson)
             THEN DELETE OBJECT customerJson.
     END FINALLY.
+    
+END PROCEDURE.
+
+@openapi.openedge.export(type="REST", useReturnValue="false", writeDataSetBeforeImage="false").
+PROCEDURE DeleteCustomer:
+    DEFINE INPUT PARAMETER customerNumber AS INTEGER NO-UNDO. 
+    DEFINE OUTPUT PARAMETER processResponse AS LONGCHAR NO-UNDO.
+    
+    DEFINE VARIABLE jsonCustomerInformation AS Progress.Json.ObjectModel.JsonObject NO-UNDO.
+    DEFINE VARIABLE isDeletionSuccess       AS LOGICAL                              NO-UNDO.
+    DEFINE VARIABLE messageText             AS CHARACTER                            NO-UNDO.
+    DEFINE VARIABLE responseJson            AS JsonObject                           NO-UNDO.
+    DEFINE VARIABLE errorCount              AS INTEGER                              NO-UNDO.
+    
+    DEFINE BUFFER customer FOR customer.
+    
+    FIND FIRST customer EXCLUSIVE-LOCK 
+        WHERE Customer.CustNum = customerNumber NO-ERROR NO-WAIT.
+    
+    IF AVAILABLE customer THEN 
+    DO:
+        DELETE customer NO-ERROR.
+        IF ERROR-STATUS:ERROR = TRUE THEN 
+        DO:
+            isDeletionSuccess = FALSE.
+            DO errorCount = 1 TO ERROR-STATUS:NUM-MESSAGES:
+                messageText = messageText + '' + ERROR-STATUS:GET-MESSAGE (errorCount).
+            END. 
+        END.
+        ELSE
+            isDeletionSuccess = TRUE.
+    END. 
+    ELSE 
+    DO:
+        IF LOCKED customer THEN 
+            messageText = "customer record is being used currently.".
+        ELSE
+            messageText = "customer record not found.".
+        isDeletionSuccess = FALSE.
+    END.
+    
+    FINALLY: 
+        responseJson = NEW JsonObject().
+        responseJson:Add('status', isDeletionSuccess).
+        responseJson:Add('message', messageText).
+        
+        processResponse = responseJson:GetJsonText().
+                
+        IF VALID-OBJECT (responseJson) THEN 
+            DELETE OBJECT responseJson.
+    END FINALLY. 
     
 END PROCEDURE.
